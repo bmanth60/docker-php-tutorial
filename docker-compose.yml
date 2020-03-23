@@ -1,9 +1,19 @@
-version: '2'
-
+version: '3'
 services:
     php:
-        image: php:7.4.3-apache
+        build:
+            context: .
+            dockerfile: Dockerfile
         volumes:
             - ./src:/var/www/html/
         ports:
-            - 8080:80
+            - 80:80
+    mysql:
+        image: mariadb:10.4.12
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+        volumes:
+            - db-data:/var/lib/mysql
+
+volumes:
+    db-data:
