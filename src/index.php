@@ -1,5 +1,3 @@
-<html>
-    <body>
-        <h2>Hello World</h2>
-    </body>
-</html>
+<?php
+    require_once './base.php';
+?>
