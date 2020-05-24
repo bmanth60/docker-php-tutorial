@@ -6,16 +6,17 @@ services:
             dockerfile: Dockerfile
         environment:
             PORT: 80
+            DATABASE_URL: http://postgres:root@db:5432/app
         volumes:
             - ./src:/var/www/html/
         ports:
             - 80:80
     db:
-        image: mariadb:10.4.12
+        image: postgres:12
         environment:
-            MYSQL_ROOT_PASSWORD: root
+            POSTGRES_PASSWORD: root
         volumes:
-            - db-data:/var/lib/mysql
+            - db-data:/var/lib/postgresql/data
 
 volumes:
     db-data:

@@ -18,14 +18,21 @@
             <?php
                 writeTag('h1', 'Example Form');
                 if (isPostBack()) {
-                    $dsn = "mysql:host=mysql;dbname=app";
                     try {
-                        $pdo = new PDO($dsn, 'root', 'root');
+                        $db = parse_url(getenv("DATABASE_URL"));
+                        $pdo = new PDO("pgsql:" . sprintf(
+                            "host=%s;port=%s;user=%s;password=%s;dbname=%s",
+                            $db["host"],
+                            $db["port"],
+                            $db["user"],
+                            $db["pass"],
+                            ltrim($db["path"], "/")
+                        ));
                         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
                         $password = hash('sha256', $_POST['password']);
 
-                        $stmt = $pdo->prepare('SELECT * FROM users WHERE username = ? AND password = ?');
+                        $stmt = $pdo->prepare('SELECT * FROM users WHERE username = ? AND LOWER(password) = ?');
                         $stmt->execute([$_POST['username'], $password]);
                         $user = $stmt->fetch();
 
