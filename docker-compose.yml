@@ -4,6 +4,8 @@ services:
         build:
             context: .
             dockerfile: Dockerfile
+        environment:
+            PORT: 80
         volumes:
             - ./src:/var/www/html/
         ports:
