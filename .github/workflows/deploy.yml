@@ -10,11 +10,7 @@ jobs:
         - name: Login to Heroku container registry
           env: 
             HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-          run: heroku container:login 
-        - name: Prevent Heroku from clobbering our config
-          env: 
-            HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-          run: heroku labs:enable -a ${{ secrets.HEROKU_APP_NAME }} runtime-new-layer-extract
+          run: heroku container:login
         - name: Build and push from dockerfile to Heroku registry
           env:
             HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
